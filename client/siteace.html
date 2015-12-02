@@ -6,10 +6,13 @@
     <!-- navbar  - you will be putting the login functions here -->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-	        Site Ace
-	      </a>
+            <div class="row">
+                <div class="col-md-9 navbar-brand">
+                    <a href="#">Site Ace</a>
+                </div>
+                <div class="col-md-3">
+                    {{> loginButtons}}
+                </div>
             </div>
         </div>
     </nav>
@@ -21,9 +24,11 @@
 
 
 <template name="website_form">
+    {{#if currentUser}}
     <a class="btn btn-default js-toggle-website-form" href="#">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a>
+    {{/if}}
     <div id="website_form" class="hidden_div">
         <form class="js-save-website-form">
             <div class="form-group">
@@ -59,11 +64,14 @@
             {{description}}
         </p>
         <a href="#" class="btn btn-default js-upvote">
-            <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-arrow-up" aria-hidden="true">{{upVotes}}</span>
         </a>
         <a href="#" class="btn btn-default js-downvote">
-            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true">{{downVotes}}</span>
         </a>
+        <p>
+            Added: {{createdOn}}
+        </p>
         <!-- you will be putting your up and down vote buttons in here! -->
     </li>
 </template>
