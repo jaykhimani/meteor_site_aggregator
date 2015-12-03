@@ -9,6 +9,8 @@ Meteor.startup(function() {
             description: "This is where this course was developed.",
             createdOn: new Date(),
             createdBy: "System",
+            upVoters: [],
+            downVoters: [],
             upVotes: 0,
             downVotes: 0
         });
@@ -18,6 +20,8 @@ Meteor.startup(function() {
             description: "University of London International Programme.",
             createdOn: new Date(),
             createdBy: "System",
+            upVoters: [],
+            downVoters: [],
             upVotes: 0,
             downVotes: 0
         });
@@ -27,6 +31,8 @@ Meteor.startup(function() {
             description: "Universal access to the world’s best education.",
             createdOn: new Date(),
             createdBy: "System",
+            upVoters: [],
+            downVoters: [],
             upVotes: 0,
             downVotes: 0
         });
@@ -36,6 +42,8 @@ Meteor.startup(function() {
             description: "Popular search engine.",
             createdOn: new Date(),
             createdBy: "System",
+            upVoters: [],
+            downVoters: [],
             upVotes: 0,
             downVotes: 0
         });
