@@ -41,15 +41,15 @@
         <form class="js-save-website-form">
             <div class="form-group">
                 <label for="url">Site address</label>
-                <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+                <input type="text" class="form-control js-website-url" id="url" placeholder="http://www.mysite.com">
             </div>
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Mysite">
+                <input type="text" class="form-control" id="title" placeholder="Mysite" value="{{getNewSiteTitle}}" />
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+                <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ..." value="{{getNewSiteDescription}}" />
             </div>
 
             <button type="submit" class="btn btn-default">Submit</button>
@@ -81,7 +81,9 @@
             Added: {{formatDate createdOn 'DD MMM YYYY HH:mm'}}
         </p>
         <p>
-            <span class="glyphicon glyphicon-thumbs-up">({{getNumberOfUpVoters}})</span>, <span class="glyphicon glyphicon-thumbs-down">({{getNumberOfDownVoters}})</span>, <span class="glyphicon glyphicon-comment">({{getNumberOfComments}})</span>
+            <span class="glyphicon glyphicon-thumbs-up">({{getNumberOfUpVoters}})</span>,
+            <span class="glyphicon glyphicon-thumbs-down">({{getNumberOfDownVoters}})</span>,
+            <span class="glyphicon glyphicon-comment">({{getNumberOfComments}})</span>
         </p>
         <!-- you will be putting your up and down vote buttons in here! -->
     </li>

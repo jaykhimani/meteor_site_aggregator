@@ -27,6 +27,14 @@ Template.website_item.helpers({
     }
 });
 
+Template.website_form.helpers({
+    getNewSiteTitle: function() {
+        return Session.get('newWebsiteTitle');
+    },
+    getNewSiteDescription: function() {
+        return Session.get('newWebsiteDescription');
+    }
+});
 
 /////
 // template events
@@ -53,7 +61,7 @@ Template.website_item.events({
                     $push: {
                         upVoters: Meteor.user()._id
                     },
-                    $inc : {
+                    $inc: {
                         upVotes: 1
                     }
                 });
@@ -89,7 +97,7 @@ Template.website_item.events({
                     $push: {
                         downVoters: Meteor.user()._id
                     },
-                    $inc : {
+                    $inc: {
                         downVotes: 1
                     }
                 });
@@ -108,6 +116,22 @@ Template.website_item.events({
 Template.website_form.events({
     "click .js-toggle-website-form": function(event) {
         $("#website_form").toggle('slow');
+    },
+    "blur .js-website-url": function(event) {
+        var objTitle = event.target.title;
+        Meteor.call("getUrlDetails", event.target.value, 'GET', function(error, result) {
+            if (result) {
+                if(result.error) {
+                    Session.set('newWebsiteTitle', undefined);
+                    Session.set('newWebsiteDescription', undefined);
+                    alert('Cannot add new site: ' + result.error);
+                } else {
+                    Session.set('newWebsiteTitle', result.title);
+                    Session.set('newWebsiteDescription', result.description);
+                }
+            }
+        });
+
     },
     "submit .js-save-website-form": function(event, template) {
 
@@ -136,11 +160,13 @@ Template.website_form.events({
             downVoters: [],
             upVotes: 0,
             downVotes: 0,
-            comments:[]
+            comments: []
         });
         // Close the form
         $("#website_form").toggle('slow');
         template.find("form").reset();
+        Session.set('newWebsiteTitle', undefined);
+        Session.set('newWebsiteDescription', undefined);
         return false; // stop the form submit from reloading the page
     }
 });
