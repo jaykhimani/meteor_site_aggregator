@@ -12,7 +12,8 @@ Meteor.startup(function() {
             upVoters: [],
             downVoters: [],
             upVotes: 0,
-            downVotes: 0
+            downVotes: 0,
+            comments:[]
         });
         Websites.insert({
             title: "University of London",
@@ -23,7 +24,8 @@ Meteor.startup(function() {
             upVoters: [],
             downVoters: [],
             upVotes: 0,
-            downVotes: 0
+            downVotes: 0,
+            comments:[]
         });
         Websites.insert({
             title: "Coursera",
@@ -34,7 +36,8 @@ Meteor.startup(function() {
             upVoters: [],
             downVoters: [],
             upVotes: 0,
-            downVotes: 0
+            downVotes: 0,
+            comments:[]
         });
         Websites.insert({
             title: "Google",
@@ -45,7 +48,8 @@ Meteor.startup(function() {
             upVoters: [],
             downVoters: [],
             upVotes: 0,
-            downVotes: 0
+            downVotes: 0,
+            comments:[]
         });
     }
 });

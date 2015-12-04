@@ -1,0 +1,49 @@
+<template name="website_details">
+    <div class="container">
+        <div class="pull-right">
+            <a href="/">Back</a>
+        </div>
+        <h2>{{title}}</h2>
+        <h4>{{description}}</h4>
+        <hr/>
+        {{#if currentUser}}
+        <div id="website_comment_form">
+            <h5>Leave your comment</h5>
+            <form class="js-save-website-comment-form">
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea class="form-control" id="comment" placeholder="Your comment"></textarea>
+                </div>
+                <div class="container">
+                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-success">Post Comment</button>
+                </div>
+            </form>
+        </div>
+        <hr/>
+        {{else}}
+            <h6>Signin to add comment</h6>
+            <hr/>
+        <!-- end of comment form -->
+        {{/if}}
+        {{> comment_list}}
+    </div>
+</template>
+
+<template name="comment_list">
+    <h5>Comments</h5>
+    <ol>
+        {{#each comments}} {{> comment}} {{/each}}
+    </ol>
+</template>
+
+<template name="comment">
+    <li>
+        <div class="form-group">
+            <label>{{getCommenterName}} - {{formatDate createdOn 'DD MMM YYYY HH:mm'}}</label>
+            <div class="content">
+                {{commentText}}
+            </div>
+        </div>
+    </li>
+</template>

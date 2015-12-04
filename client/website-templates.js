@@ -8,6 +8,7 @@ Template.website_list.helpers({
         return Websites.find({}, {
             sort: {
                 upVotes: -1,
+                createdOn: 1,
                 title: 1
             }
         });
@@ -20,6 +21,9 @@ Template.website_item.helpers({
     },
     getNumberOfDownVoters: function() {
         return this.downVoters.length;
+    },
+    getNumberOfComments: function() {
+        return this.comments.length;
     }
 });
 
@@ -129,9 +133,10 @@ Template.website_form.events({
             createdOn: new Date(),
             createdBy: Meteor.user()._id,
             upVoters: [],
-            downVotes: [],
+            downVoters: [],
             upVotes: 0,
-            downVotes: 0
+            downVotes: 0,
+            comments:[]
         });
         // Close the form
         $("#website_form").toggle('slow');
