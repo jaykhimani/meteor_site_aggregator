@@ -40,6 +40,14 @@ Template.website_form.helpers({
 // template events
 /////
 
+Template.navbar.rendered = function() {
+    $('[data-toggle=popover]').popover({
+        placement: 'bottom',
+        html: true,
+        trigger: 'focus'
+    });
+};
+
 Template.website_item.events({
     "click .js-upvote": function(event) {
         // example of how you can access the id for the website in the database
@@ -121,7 +129,7 @@ Template.website_form.events({
         var objTitle = event.target.title;
         Meteor.call("getUrlDetails", event.target.value, 'GET', function(error, result) {
             if (result) {
-                if(result.error) {
+                if (result.error) {
                     Session.set('newWebsiteTitle', undefined);
                     Session.set('newWebsiteDescription', undefined);
                     alert('Cannot add new site: ' + result.error);
