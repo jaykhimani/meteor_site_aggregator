@@ -32,7 +32,6 @@ Template.website_list.helpers({
             }
             searchCriteria["$or"] = orclause;
         }
-        console.log(searchCriteria);
         return Websites.find(searchCriteria, {
             sort: {
                 upVotes: -1,
@@ -56,7 +55,7 @@ Template.website_item.helpers({
 });
 
 Template.website_search_form.helpers({
-    getSearchTerms: function(){
+    getSearchTerms: function() {
         return Session.get('searchTerms');
     }
 });
