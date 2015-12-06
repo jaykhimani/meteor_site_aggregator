@@ -40,7 +40,7 @@
 <template name="comment">
     <li>
         <div class="form-group">
-            <label>{{getCommenterName}} - {{formatDate createdOn 'DD MMM YYYY HH:mm'}}</label>
+            <label>{{getCommenterName commenter}} - {{formatDate createdOn 'DD MMM YYYY HH:mm'}}</label>
             <div class="content">
                 {{commentText}}
             </div>

@@ -5,7 +5,35 @@
 // helper function that returns all available websites
 Template.website_list.helpers({
     websites: function() {
-        return Websites.find({}, {
+        var searchCriteria = {};
+        if (Session.get("searchTerms")) {
+            var searchTerms = Session.get("searchTerms");
+            var orclause = [];
+            if (searchTerms.charAt(0) === '"' && searchTerms.charAt(searchTerms.length - 1) === '"') {
+                // Search is for full text and not each words in the text
+                searchTerms = searchTerms.substring(1, searchTerms.length - 1);
+                orclause.push({
+                    title: new RegExp(searchTerms)
+                });
+                orclause.push({
+                    description: new RegExp(searchTerms)
+                });
+            } else {
+                // Search for each term
+                var splits = searchTerms.split(" ");
+                for (var cntr = 0; cntr < splits.length; cntr++) {
+                    orclause.push({
+                        title: new RegExp(splits[cntr])
+                    });
+                    orclause.push({
+                        description: new RegExp(splits[cntr])
+                    });
+                }
+            }
+            searchCriteria["$or"] = orclause;
+        }
+        console.log(searchCriteria);
+        return Websites.find(searchCriteria, {
             sort: {
                 upVotes: -1,
                 createdOn: 1,
@@ -27,6 +55,12 @@ Template.website_item.helpers({
     }
 });
 
+Template.website_search_form.helpers({
+    getSearchTerms: function(){
+        return Session.get('searchTerms');
+    }
+});
+
 Template.website_form.helpers({
     getNewSiteTitle: function() {
         return Session.get('newWebsiteTitle');
@@ -42,7 +76,6 @@ Template.website_form.helpers({
 
 Template.navbar.rendered = function() {
     $('[data-toggle=popover]').popover({
-        placement: 'bottom',
         html: true,
         trigger: 'focus'
     });
@@ -176,5 +209,17 @@ Template.website_form.events({
         Session.set('newWebsiteTitle', undefined);
         Session.set('newWebsiteDescription', undefined);
         return false; // stop the form submit from reloading the page
+    }
+});
+
+Template.website_search_form.events({
+    "keyup .js-search-terms": function(event, template) {
+        var searchTerms = event.target.value;
+        if (searchTerms.length === 0) {
+            Session.set('searchTerms', undefined);
+            return;
+        }
+
+        Session.set('searchTerms', searchTerms);
     }
 });

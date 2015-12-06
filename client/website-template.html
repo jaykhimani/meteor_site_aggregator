@@ -14,12 +14,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-9 navbar-brand">
-                    <a href="#" data-toggle="popover" title="Some Links" data-content="<p>
+                    <a href="#" data-toggle="popover" title="Some Links" data-placement="right" data-content="<small><p>
                             <a href='https://github.com/jaykhimani/meteor_site_aggregator' target='_blank'>Fork me on GitHub</a>
                         </p>
                         <p>
                             <a href='http://jaykhimani.blogspot.com' target='_blank'>Personal Blog</a>
-                        </p>">
+                        </p></small>">
                         <span class="glyphicon glyphicon-info-sign"></span>
                     </a><a href="#">Site Ace</a>
                 </div>
@@ -34,7 +34,7 @@
 
 <template name="sitelist">
     <div class="container">
-        {{> website_form}} {{> website_list}}
+        {{> website_form}} {{> website_search_form}} {{> website_list}}
     </div>
 </template>
 
@@ -61,6 +61,26 @@
 
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
+    </div>
+</template>
+
+<template name="website_search_form">
+    <div class="container">
+        <form class="js-website-search-form">
+            <div class="input-group">
+                <input type="text" class="form-control js-search-terms" id="searchTerms" placeholder="Search this site" value="{{getSearchTerms}}" />
+                <span class="input-group-btn">
+                    <a href="#" class="btn btn-help" data-toggle="popover" title="Search Help" data-placement="left" data-content="<small><p>
+                        If you want to search for exact term put your serarch criteria between double quotes.
+                    </p><p>
+                        If you want to search for any of the terms just start typing and not put search criteria between double quotes.
+                    </p></small>">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                </span>
+            </div>
+        </form>
+        <hr/>
     </div>
 </template>
 

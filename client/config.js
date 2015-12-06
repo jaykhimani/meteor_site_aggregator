@@ -3,4 +3,7 @@ Accounts.ui.config({
     passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
 
-Meteor.subscribe("websites");
+Tracker.autorun(function() {
+    Meteor.subscribe("websites");
+    Meteor.subscribe("userData");
+});

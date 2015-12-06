@@ -18,10 +18,12 @@ Template.website_details.events({
 });
 
 Template.comment.helpers({
-    getCommenterName: function() {
+    getCommenterName: function(user_id) {
+        console.log('this.commenter: ' + user_id);
         var user = Meteor.users.findOne({
-            _id: this.commenter
+            _id: user_id
         });
+        console.log('User: ' + user);
         if(user) {
             return user.username;
         }
