@@ -21,3 +21,5 @@ This demo app contains following features
 6.	Users can move to a detail page for a website (using routing).
 
 7.	On the detail page, users can post comments about a webpage, and they are displayed below the description of the webpage.
+
+8.	User can search for the sites. Search is based on the website titles and description.
