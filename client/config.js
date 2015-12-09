@@ -6,4 +6,5 @@ Accounts.ui.config({
 Tracker.autorun(function() {
     Meteor.subscribe("websites");
     Meteor.subscribe("userData");
+    Meteor.subscribe("UserKeywords")
 });

@@ -105,6 +105,39 @@ Template.website_item.events({
                         upVotes: 1
                     }
                 });
+
+                var parsed = nlp.pos(website.description);
+                var nouns = parsed.nouns();
+                var userKeywords = UserKeywords.findOne({
+                    user_id: Meteor.userId()
+                });
+                var userKeywordId;
+                if (userKeywords) {
+                    userKeywordId = userKeywords._id;
+                }
+                var nounsAry = [];
+                for (var i = 0; i < nouns.length; i++) {
+                    var noun = nouns[i];
+                    nounsAry.push(noun.text);
+                }
+                if (userKeywordId) { // We already have some keywords defined for this user
+                    UserKeywords.update({
+                        _id: userKeywordId
+                    }, {
+                        $addToSet: {
+                            keywords: {
+                                $each: nounsAry
+                            }
+                        }
+                    });
+                } else {
+                    // No keywords yet defined for the user, insert all
+                    UserKeywords.insert({
+                        user_id: Meteor.userId(),
+                        keywords: nounsAry
+                    });
+                }
+
             } else {
                 // user has already upvoted this site. do nothing.
                 alert('You have already up voted this site');
@@ -208,6 +241,11 @@ Template.website_form.events({
         Session.set('newWebsiteTitle', undefined);
         Session.set('newWebsiteDescription', undefined);
         return false; // stop the form submit from reloading the page
+    },
+    "click .js-nouns-button": function(event, template) {
+        var desc = $('#description').val();
+        var res = nlp.pos(desc);
+        console.log(res);
     }
 });
 

@@ -40,9 +40,9 @@
 
 <template name="website_form">
     {{#if currentUser}}
-    <a class="btn btn-default js-toggle-website-form" href="#">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </a>
+        <a class="btn btn-default js-toggle-website-form" href="#">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
     {{/if}}
     <div id="website_form" class="hidden_div">
         <form class="js-save-website-form">
@@ -52,11 +52,13 @@
             </div>
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Mysite" value="{{getNewSiteTitle}}" />
+                <input type="text" class="form-control" id="title" placeholder="Mysite" value="{{getNewSiteTitle}}"/>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ..." value="{{getNewSiteDescription}}" />
+                <input type="text" class="form-control" id="description"
+                       placeholder="I found this site really useful for ..." value="{{getNewSiteDescription}}"/>
+                <button type="button" class="js-nouns-button">Nouns</button>
             </div>
 
             <button type="submit" class="btn btn-default">Submit</button>
@@ -68,9 +70,11 @@
     <div class="container">
         <form class="js-website-search-form">
             <div class="input-group">
-                <input type="text" class="form-control js-search-terms" id="searchTerms" placeholder="Search this site" value="{{getSearchTerms}}" />
+                <input type="text" class="form-control js-search-terms" id="searchTerms" placeholder="Search this site"
+                       value="{{getSearchTerms}}"/>
                 <span class="input-group-btn">
-                    <a href="#" class="btn btn-help" data-toggle="popover" title="Search Help" data-placement="left" data-content="<small><p>
+                    <a href="#" class="btn btn-help" data-toggle="popover" title="Search Help" data-placement="left"
+                       data-content="<small><p>
                         If you want to search for exact term put your serarch criteria between double quotes.
                     </p><p>
                         If you want to search for any of the terms just start typing and not put search criteria between double quotes.
@@ -95,6 +99,7 @@
 <template name="website_item">
     <li>
         <a href="/website/{{_id}}" class="js-show-website-details">{{title}}</a>
+
         <p>
             {{description}}
         </p>
@@ -104,9 +109,11 @@
         <a href="#" class="btn btn-default js-downvote">
             <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
         </a>
+
         <p>
             Added: {{formatDate createdOn 'DD MMM YYYY HH:mm'}}
         </p>
+
         <p>
             <span class="glyphicon glyphicon-thumbs-up">({{getNumberOfUpVoters}})</span>,
             <span class="glyphicon glyphicon-thumbs-down">({{getNumberOfDownVoters}})</span>,
