@@ -32,6 +32,32 @@
 
 </template>
 
+<template name="tabcontainer">
+    <div class="container">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a class="js-tab" href="#sitelisttab" aria-controls="sitelisttab" role="tab" data-toggle="tab">Site List</a>
+            </li>
+            <li role="presentation">
+                <a class="js-tab" href="#suggestiontab" aria-controls="suggestiontab" role="tab" data-toggle="tab">Suggested Sites</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="sitelisttab">
+            {{> sitelist}}
+        </div>
+        <div role="tabpanel" class="tab-pane active" id="suggestiontab">
+            {{> suggestion}}
+        </div>
+    </div>
+</template>
+<template name="suggestion">
+    <div class="jumbotron">
+        Suggestions - comming soon.
+    </div>
+
+</template>
 <template name="sitelist">
     <div class="container">
         {{> website_form}} {{> website_search_form}} {{> website_list}}
@@ -40,11 +66,13 @@
 
 <template name="website_form">
     {{#if currentUser}}
-        <a class="btn btn-default js-toggle-website-form" href="#">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    <div class="container spacer">
+        <a class="btn btn-info pull-right js-toggle-website-form" href="#">
+            <span aria-hidden="true">Add New Website</span>
         </a>
+    </div>
     {{/if}}
-    <div id="website_form" class="hidden_div">
+    <div id="website_form" class="hidden_div spacer">
         <form class="js-save-website-form">
             <div class="form-group">
                 <label for="url">Site address</label>
@@ -52,16 +80,14 @@
             </div>
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Mysite" value="{{getNewSiteTitle}}"/>
+                <input type="text" class="form-control" id="title" placeholder="Mysite" value="{{getNewSiteTitle}}" />
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" id="description"
-                       placeholder="I found this site really useful for ..." value="{{getNewSiteDescription}}"/>
-                <button type="button" class="js-nouns-button">Nouns</button>
+                <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ..." value="{{getNewSiteDescription}}" />
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-success">Add Site</button>
         </form>
     </div>
 </template>
@@ -70,11 +96,9 @@
     <div class="container">
         <form class="js-website-search-form">
             <div class="input-group">
-                <input type="text" class="form-control js-search-terms" id="searchTerms" placeholder="Search this site"
-                       value="{{getSearchTerms}}"/>
+                <input type="text" class="form-control js-search-terms" id="searchTerms" placeholder="Search this site" value="{{getSearchTerms}}" />
                 <span class="input-group-btn">
-                    <a href="#" class="btn btn-help" data-toggle="popover" title="Search Help" data-placement="left"
-                       data-content="<small><p>
+                    <a href="#" class="btn btn-help" data-toggle="popover" title="Search Help" data-placement="left" data-content="<small><p>
                         If you want to search for exact term put your serarch criteria between double quotes.
                     </p><p>
                         If you want to search for any of the terms just start typing and not put search criteria between double quotes.

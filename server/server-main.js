@@ -10,7 +10,8 @@ Meteor.publish("userData", function(argument) {
     return Meteor.users.find({}, {
         fields: {
             "_id": 1,
-            "username": 1
+            "username": 1,
+            "keywords": 1
         }
     });
 });

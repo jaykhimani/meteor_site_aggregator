@@ -80,6 +80,12 @@ Template.navbar.rendered = function() {
     });
 };
 
+Template.tabcontainer.events({
+    "click .js-tab": function(event, template){
+        console.log("target: " + event.target + ", relatedTarget: " + event.relatedTarget);
+    }
+});
+
 Template.website_item.events({
     "click .js-upvote": function(event) {
         // example of how you can access the id for the website in the database
@@ -106,44 +112,14 @@ Template.website_item.events({
                     }
                 });
 
-                var parsed = nlp.pos(website.description);
-                var nouns = parsed.nouns();
-                var userKeywords = UserKeywords.findOne({
-                    user_id: Meteor.userId()
-                });
-                var userKeywordId;
-                if (userKeywords) {
-                    userKeywordId = userKeywords._id;
-                }
-                var nounsAry = [];
-                for (var i = 0; i < nouns.length; i++) {
-                    var noun = nouns[i];
-                    nounsAry.push(noun.text);
-                }
-                if (userKeywordId) { // We already have some keywords defined for this user
-                    UserKeywords.update({
-                        _id: userKeywordId
-                    }, {
-                        $addToSet: {
-                            keywords: {
-                                $each: nounsAry
-                            }
-                        }
-                    });
-                } else {
-                    // No keywords yet defined for the user, insert all
-                    UserKeywords.insert({
-                        user_id: Meteor.userId(),
-                        keywords: nounsAry
-                    });
-                }
+                addUserKeywords(website.description);
 
             } else {
                 // user has already upvoted this site. do nothing.
-                alert('You have already up voted this site');
+                toastr.warning('You have already up voted this site');
             }
         } else {
-            alert('Please signin to register your vote');
+            toastr.warning('Please signin to register your vote');
         }
 
         return false; // prevent the button from reloading the page
@@ -176,10 +152,10 @@ Template.website_item.events({
                 });
             } else {
                 // user has already upvoted this site. do nothing.
-                alert('You have already down voted this site');
+                toastr.warning('You have already down voted this site');
             }
         } else {
-            alert('Please signin to register your vote');
+            toastr.warning('Please signin to register your vote');
         }
 
         return false; // prevent the button from reloading the page
@@ -197,7 +173,7 @@ Template.website_form.events({
                 if (result.error) {
                     Session.set('newWebsiteTitle', undefined);
                     Session.set('newWebsiteDescription', undefined);
-                    alert('Cannot add new site: ' + result.error);
+                    toastr.error('Cannot add new site: ' + result.error);
                 } else {
                     Session.set('newWebsiteTitle', result.title);
                     Session.set('newWebsiteDescription', result.description);
@@ -213,12 +189,12 @@ Template.website_form.events({
         var title = event.target.title.value;
         var description = event.target.description.value;
         if (isEmpty(url)) {
-            alert('Site address cannot be empty');
+            toastr.error('Site address cannot be empty');
             return false;
         }
 
         if (isEmpty(description)) {
-            alert('Site description cannot be empty');
+            toastr.error('Site description cannot be empty');
             return false;
         }
 
@@ -241,11 +217,6 @@ Template.website_form.events({
         Session.set('newWebsiteTitle', undefined);
         Session.set('newWebsiteDescription', undefined);
         return false; // stop the form submit from reloading the page
-    },
-    "click .js-nouns-button": function(event, template) {
-        var desc = $('#description').val();
-        var res = nlp.pos(desc);
-        console.log(res);
     }
 });
 
@@ -254,9 +225,9 @@ Template.website_search_form.events({
         var searchTerms = event.target.value;
         if (searchTerms.length === 0) {
             Session.set('searchTerms', undefined);
-            return;
+        } else {
+            Session.set('searchTerms', searchTerms);
         }
-
-        Session.set('searchTerms', searchTerms);
+        return true;
     }
 });

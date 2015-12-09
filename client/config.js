@@ -8,3 +8,10 @@ Tracker.autorun(function() {
     Meteor.subscribe("userData");
     Meteor.subscribe("UserKeywords")
 });
+
+toastr.options = {
+    closeButton: true,
+    preventDuplicates: true,
+    positionClass: "toast-top-center",
+    timeOut: 2000
+}

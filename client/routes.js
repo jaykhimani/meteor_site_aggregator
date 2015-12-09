@@ -6,7 +6,7 @@ Router.route('/', function() {
     this.render('navbar', {
         to: 'navbar'
     });
-    this.render('sitelist', {
+    this.render('tabcontainer', {
         to: 'main'
     });
 });
