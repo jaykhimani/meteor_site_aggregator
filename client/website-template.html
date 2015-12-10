@@ -137,7 +137,7 @@
 <!-- template that displays individual website entries -->
 <template name="website_item">
     <li class="spacer">
-        <a href="/website/{{_id}}" class="js-show-website-details">{{title}}</a>
+        <a href="/website/{{_id}}" class="js-show-website-details">{{title}}</a><a href="{{url}}" target="_blank"><span class="glyphicon glyphicon-new-window btn-sm"></span></a>
         {{> website_title_desc}}
 
         <p class="spacer">
