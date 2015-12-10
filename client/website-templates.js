@@ -159,7 +159,7 @@ Template.website_item.events({
                 });
 
                 addUserKeywords(website.description);
-
+                toastr.success('Site up voted successfully', 'Up Vote');
             } else {
                 // user has already upvoted this site. do nothing.
                 toastr.warning('You have already up voted this site');
@@ -196,6 +196,7 @@ Template.website_item.events({
                         downVotes: 1
                     }
                 });
+                toastr.success('Site down voted successfully', 'Down Vote');
             } else {
                 // user has already upvoted this site. do nothing.
                 toastr.warning('You have already down voted this site');
