@@ -53,8 +53,13 @@
 </template>
 <template name="suggestion">
     <div class="container">
-        {{#if currentUser}} {{> website_suggestion_list}} {{else}}
-        <h4>Please signin to see suggestions based on sites you upvoted and/or added comments to. </h4>
+        <a href="#" class="btn btn-help" data-toggle="popover" title="Suggestions" data-placement="right" data-content="Suggested sites are based on sites which you have upvoted and/or commented on.">
+            <span class="glyphicon glyphicon-info-sign"></span>
+        </a>
+        {{#if currentUser}}
+            {{> website_suggestion_list}}
+        {{else}}
+            <h4>Please signin to see suggestions based on sites you upvoted and/or added comments to. </h4>
         {{/if}}
     </div>
 
@@ -121,7 +126,11 @@
 
 <template name="website_suggestion_list">
     <ol>
-        {{#each suggestedWebsites}} {{> suggested_website_item}} {{else}} Please upvote and/or comment some site to get suggestions {{/each}}
+        {{#each suggestedWebsites}}
+            {{> suggested_website_item}}
+        {{else}}
+            Please upvote and/or comment some site to get suggestions.
+        {{/each}}
     </ol>
 </template>
 
