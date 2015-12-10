@@ -24,3 +24,7 @@ iron:router
 http
 art1sec8:nlp-compromise
 chrismbeckett:toastr
+meteorhacks:npm
+
+
+npm-container

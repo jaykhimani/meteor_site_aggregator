@@ -4,7 +4,8 @@ Meteor.startup(function() {
     // code to run on server at startup
 
     // Define server methods to invoked from client
-    var cheerio = Npm.require('cheerio');
+    //var cheerio = Npm.require('cheerio');
+    var cheerio = Meteor.npmRequire('cheerio');
     Meteor.methods({
         getUrlDetails: function(url, method) {
             var result, title, desc, err;
