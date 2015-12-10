@@ -14,14 +14,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-9 navbar-brand">
-                    <a href="#" data-toggle="popover" title="Some Links" data-placement="right" data-content="<small><p>
+                    <a href="#" class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Some Links" data-placement="right" data-content="<p>
                             <a href='https://github.com/jaykhimani/meteor_site_aggregator' target='_blank'>Fork me on GitHub</a>
                         </p>
                         <p>
                             <a href='http://jaykhimani.blogspot.com' target='_blank'>Personal Blog</a>
-                        </p></small>">
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                    </a><a href="#">Site Ace</a>
+                        </p>">
+                    </a>&nbsp;<a href="/">Site Ace</a>
                 </div>
                 <div class="col-md-3">
                     {{> loginButtons}}
@@ -47,14 +46,16 @@
         <div role="tabpanel" class="tab-pane active" id="sitelisttab">
             {{> sitelist}}
         </div>
-        <div role="tabpanel" class="tab-pane active" id="suggestiontab">
+        <div role="tabpanel" class="tab-pane" id="suggestiontab">
             {{> suggestion}}
         </div>
     </div>
 </template>
 <template name="suggestion">
-    <div class="jumbotron">
-        Suggestions - comming soon.
+    <div class="container">
+        {{#if currentUser}} {{> website_suggestion_list}} {{else}}
+        <h4>Please signin to see suggestions based on sites you upvoted and/or added comments to. </h4>
+        {{/if}}
     </div>
 
 </template>
@@ -93,22 +94,21 @@
 </template>
 
 <template name="website_search_form">
-    <div class="container">
+    <div class="container spacer">
         <form class="js-website-search-form">
             <div class="input-group">
                 <input type="text" class="form-control js-search-terms" id="searchTerms" placeholder="Search this site" value="{{getSearchTerms}}" />
                 <span class="input-group-btn">
-                    <a href="#" class="btn btn-help" data-toggle="popover" title="Search Help" data-placement="left" data-content="<small><p>
+                    <a href="#" class="btn btn-warning" data-toggle="popover" title="Search Help" data-placement="left" data-content="<p>
                         If you want to search for exact term put your serarch criteria between double quotes.
                     </p><p>
                         If you want to search for any of the terms just start typing and not put search criteria between double quotes.
-                    </p></small>">
+                    </p>">
                         <span class="glyphicon glyphicon-info-sign"></span>
                     </a>
                 </span>
             </div>
         </form>
-        <hr/>
     </div>
 </template>
 
@@ -119,24 +119,28 @@
     </ol>
 </template>
 
+<template name="website_suggestion_list">
+    <ol>
+        {{#each suggestedWebsites}} {{> suggested_website_item}} {{else}} Please upvote and/or comment some site to get suggestions {{/each}}
+    </ol>
+</template>
+
 <!-- template that displays individual website entries -->
 <template name="website_item">
-    <li>
+    <li class="spacer">
         <a href="/website/{{_id}}" class="js-show-website-details">{{title}}</a>
+        {{> website_title_desc}}
 
-        <p>
-            {{description}}
+        <p class="spacer">
+            Added On: {{formatDate createdOn 'DD MMM YYYY HH:mm'}}
         </p>
-        <a href="#" class="btn btn-default js-upvote">
+
+        <a href="#" class="btn btn-success btn-xs js-upvote">
             <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
         </a>
-        <a href="#" class="btn btn-default js-downvote">
+        <a href="#" class="btn btn-danger btn-xs js-downvote">
             <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
         </a>
-
-        <p>
-            Added: {{formatDate createdOn 'DD MMM YYYY HH:mm'}}
-        </p>
 
         <p>
             <span class="glyphicon glyphicon-thumbs-up">({{getNumberOfUpVoters}})</span>,
@@ -145,4 +149,21 @@
         </p>
         <!-- you will be putting your up and down vote buttons in here! -->
     </li>
+</template>
+
+<template name="suggested_website_item">
+    <li>
+        <a href="{{url}}" target="_blank">{{title}}</a> <span class="glyphicon glyphicon-new-window btn-sm"></span>
+        {{> website_title_desc}}
+    </li>
+</template>
+
+<template name="website_title_desc">
+
+    <p>
+        {{description}}
+    </p>
+    <p class="spacer">
+        Added By: {{getCreator}}
+    </p>
 </template>

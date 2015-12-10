@@ -2,6 +2,39 @@
 // template helpers
 /////
 
+Template.website_suggestion_list.helpers({
+    suggestedWebsites: function() {
+        var user = Meteor.user();
+        if (user.profile) {
+            var keywords = user.profile.keywords;
+            if (keywords && keywords.length > 0) {
+                var orClause = [];
+                var searchCriteria = {};
+                for (var i = 0; i < keywords.length; i++) {
+                    orClause.push({
+                        description: new RegExp(keywords[i])
+                    });
+                }
+                searchCriteria["createdBy"] = {
+                    "$ne": Meteor.userId()
+                };
+                searchCriteria["upVoters"] = {
+                    "$nin": [Meteor.userId()]
+                };
+                searchCriteria["$or"] = orClause;
+                return Websites.find(searchCriteria, {
+                    sort: {
+                        upVotes: -1,
+                        createdOn: 1,
+                        title: 1
+                    }
+                });
+            }
+        }
+        return [];
+    }
+});
+
 // helper function that returns all available websites
 Template.website_list.helpers({
     websites: function() {
@@ -69,6 +102,18 @@ Template.website_form.helpers({
     }
 });
 
+Template.website_title_desc.helpers({
+    getCreator: function() {
+        var user = Meteor.users.findOne({
+            _id: this.createdBy
+        });
+        if (user) {
+            return user.username;
+        }
+        return '';
+    }
+});
+
 /////
 // template events
 /////
@@ -76,13 +121,14 @@ Template.website_form.helpers({
 Template.navbar.rendered = function() {
     $('[data-toggle=popover]').popover({
         html: true,
-        trigger: 'focus'
+        trigger: 'focus',
+        container: 'body'
     });
 };
 
 Template.tabcontainer.events({
-    "click .js-tab": function(event, template){
-        console.log("target: " + event.target + ", relatedTarget: " + event.relatedTarget);
+    "click .js-tab": function(event, template) {
+        Session.set("CurrentTab", event.target.hash);
     }
 });
 
